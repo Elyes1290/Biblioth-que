@@ -4,6 +4,12 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Author;
+use App\Models\Country;
+use App\Models\People;
+use App\Models\Book;
+use App\Models\Category;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +20,55 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $countries = Country::factory()->count(10)->create();
+        $categories = Category::factory()->count(10)->create();
+
+        $authors = Author::factory()->count(10)->make() 
+                    ->each(function ($author) use ($countries) {
+
+                        $author->country_id = $countries->random()->iso;
+                        $author->save();
+
+                    });
+                    
+            
+        
+        
+        $books = Book::factory()->count(10)->make()
+
+                        ->each(function ($book) use ($categories) {
+
+                            $book->category_id = $categories->random()->id;
+                            $book->save();    
+                        
+                        })
+                        
+                        
+                        ->each(function ($book) use ($authors) {
+
+                            $idAuthor = $authors->random()->id;
+                            $idBook = $book->isbn;
+                            $book->Authors()->attach([$idAuthor],['book_id' => $idBook]);
+
+                        });
+
+        $people = People::factory()->count(10)->make()
+                        ->each(function ($person) use ($countries) {
+
+                        $person->country_id = $countries->random()->iso;
+                        $person->save();
+
+
+                    })
+                        ->each(function ($person) use ($books) {
+
+                            $idBooks = $books->random()->isbn;
+                            $person->Books()->attach([$idBooks]);
+                    
+                    
+                        });
+        
+        
     }
 }

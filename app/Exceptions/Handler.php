@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -43,8 +44,25 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (Throwable $e) {
+            if ($e instanceof ApiException) {
+                //Log::info('test');
+                return response(
+                  [
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                  ], $e->getCode() ?: 400
+                );
+            }
+            if ($e instanceof ValidateException) {
+                return response(
+                    [
+                      'success' => false,
+                      'message' => json_decode($e->getMessage()),
+                    ], $e->getCode() ?: 400
+                );
+            }
+
         });
     }
 }
