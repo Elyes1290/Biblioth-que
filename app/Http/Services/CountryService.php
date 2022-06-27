@@ -10,43 +10,54 @@ use App\Models\Country;
 
 class CountryService {
 
-    public function storeCountry($iso){
+    public function save(Request $request, $id = null){
         try{
 
-            // $validatorRules = [
-            //     'iso' => 'required|string',
-            //     'name' => 'required|string|max:250',
-            //     'description' => 'required|string|max:250'
-            //     ];
+            $validatorRules = [
+                'iso' => 'required|string|max:3',
+                'name' => 'required|string|max:50',
+                'description' => 'nullable|string'
+                ];
         
-            //     $validator = Validator::make($request->all(),$validatorRules);
+                $validator = Validator::make($request->all(),$validatorRules);
         
-            //     if ($validator->fails()){
-            //         throw (new ValidateException(
-            //             $validator->error()
-            //         ));
-            //     }
+                if ($validator->fails()){
+                    throw (new ValidateException(
+                        $validator->errors()
+                    ));
+                }
 
         // $countries = Country::find($request->input('iso'));
 
-        // if($iso){
-        //     // $country = Country::find($iso);
-        //     if (!$country){
-        //         throw new ApiException(
-        //             "Country not found.",
-        //                 404
-        //             );
-        //          }
-        // }
-        // else{
-        //     $country = new Country();
-        // }
+        if($id){
+            $country = Country::find($id);
+            if (!$country){
+                throw new ApiException(
+                    "Country not found.",
+                        404
+                    );
+                 }
+        }
+        else{
+            $country = new Country();
+        }
 
-        // $country->name = $request->input('name');
-        // $country->description = $request->input('description');
+        if(!$id){
+            $countryFound = Country::where('iso', $country->iso)->first();
+
+            if($countryFound){
+                throw new ApiException("Cannot create country, because a same contry already exists");
+            }
+        }
 
 
-        // $country->save();
+        $country->name = $request->input('name');
+        $country->description = $request->input('description');
+
+
+        $country->save();
+
+        return $country;
 
 
         }catch(\Exception $e) {
@@ -54,40 +65,32 @@ class CountryService {
         }
     }
 
-    public function show($id){
+  
 
-        $country = Country::find($id);
-        // if (!$country){
-        //     throw new ApiException(
-        //         "Country not found.",
-        //             404
-        //         );
-        //      }
-        
+    public function delete($id) {
 
-             return $country;
+        try {
+
+                $country = Country::find($id);
+                if (!$country){
+                    throw new ApiException(
+                        "Country not found.",
+                            404
+                        );
+                     
+            }
+
+
+            $countryAuthorFound = Author::where('country_id', $country->iso)->first();
+
+            
+
+        }catch(\Exception $e){
+            throw $e;
+        }
 
     }
 
 
-    // public function update($request, $id)
-    // {
-    //     $countries = Country::find($request->input('iso'));
-    //     die($countries);
-
-    //     $author = Author::find($id);
-    //         if (!$author){
-    //             throw new ApiException(
-    //                 "Author not found.",
-    //                     404
-    //                 );
-    //              }
-        // $author->name = $request->input('name');
-        // $author->city = $request->input('city');
-        // $author->birthdate = $request->input('birthdate');
-        // $author->$countries->iso = $request->input('country_id');
-        // $countries->iso = $request->input('country_id');
-
-        // $author->save();
-    // }
+    
 }

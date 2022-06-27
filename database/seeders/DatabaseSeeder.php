@@ -23,12 +23,21 @@ class DatabaseSeeder extends Seeder
     {
         $faker = app(Generator::class);
 
-        $countries = Country::factory()->count(100)->make()
-                                        ->each(function($country) use ($faker) {
+        $countries = Country::factory()
+                        ->count(100)
+                        ->make()
+                        ->each(function ($country) use ($faker) {
+                            do {
+                                $country->iso = $faker->countryCode();
+                                $countryFound = Country::where('iso', $country->iso)->first();
+                            } while($countryFound);
+                            $country->save();
+                        });
+    //                                     ->each(function($country) use ($faker) {
                                             
-                                        $country->iso = $faker->countryCode();
-                                        $countryFound = Country::where('iso', $country->iso)->first();
-    });
+    //                                     $country->iso = $faker->countryCode();
+    //                                     $countryFound = Country::where('iso', $country->iso)->first();
+    // });
     
         $categories = Category::factory()->count(10)->create();
 
