@@ -18,7 +18,7 @@ class CountryFactory extends Factory
     {
         return [
             'iso' => $this->faker->countryCode,
-            'name' => $this->faker->name,
+            'name' => $this->faker->Country(),
             'description' => $this->faker->sentence(),
         ];
     }

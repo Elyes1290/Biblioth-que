@@ -8,6 +8,7 @@ use App\Models\Author;
 use App\Models\Country;
 use App\Models\People;
 use App\Models\Book;
+use \Faker\Generator;
 use App\Models\Category;
 
 
@@ -20,8 +21,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = app(Generator::class);
 
-        $countries = Country::factory()->count(10)->create();
+        $countries = Country::factory()->count(100)->make()
+                                        ->each(function($country) use ($faker) {
+                                            
+                                        $country->iso = $faker->countryCode();
+                                        $countryFound = Country::where('iso', $country->iso)->first();
+    });
+    
         $categories = Category::factory()->count(10)->create();
 
         $authors = Author::factory()->count(10)->make() 

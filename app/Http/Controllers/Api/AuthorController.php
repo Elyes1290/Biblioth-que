@@ -10,9 +10,12 @@ use App\Exceptions\ApiException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ValidateException;
+use App\Http\Services\AuthorService;
+use App\Http\Resources\AuthorCollection;
 
 class AuthorController extends Controller
 {
+    public function __construct(private AuthorService $_authorservice){}
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +23,11 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        return Author::all();
+        $authors = Author::all();
+
+        return new AuthorCollection($authors);
+
+
     }
 
     /**
@@ -32,33 +39,9 @@ class AuthorController extends Controller
     public function store(Request $request)
     {
     try {
-        $validatorRules = [
 
-        'name' => 'required|string|max:50',
-        'city' => 'required|string|max:20',
-        'birthdate' => 'required|date_format:Y/m/d',
-        'country_id' => 'required|digits_between:1,20|required|'
-        ];
-
-        $validator = Validator::make($request->all(),$validatorRules);
-
-        if ($validator->fails()){
-            throw (new ValidateException(
-                $validator->error()
-            ));
-        }
-
-        $countries = Country::find($request->input('iso'));
-
-        $author = new Author();
-        $author->name = $request->input('name');
-        $author->city = $request->input('city');
-        $author->birthdate = $request->input('birthdate');
-        $author->country_id = $country->iso;
-
-        $author->save();
-
-        return $author;
+        $authors = Author::all();
+        return $this->_authorservice->storeAuthor($request);
 
     }catch(\Exception $e) {
         throw $e;
@@ -74,14 +57,9 @@ class AuthorController extends Controller
     public function show($id)
     {
         try {
-            $author = Author::find($id);
-            if (!$author){
-                throw new ApiException(
-                    "Author not found.",
-                    404
-                );
-            }
-            return $author;
+            return $this->_authorservice->show($id);
+
+
         }catch(\Exception $e) {
             throw $e;
         }
@@ -96,17 +74,8 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $country = Country::find($request->input('country_id'));
-
-        $author = Author::find($id);
-        $author->name = $request->input('name');
-        $author->city = $request->input('city');
-        $author->birthdate = $request->input('birthdate');
-        $author->country_id = $country->iso;
-
-        $author->save();
-
-        return $author;
+        
+        return $this->_authorservice->storeAuthor($request, $id);
 
     }
 
@@ -120,6 +89,6 @@ class AuthorController extends Controller
     {
         $author = Author::find($id);
         $author->delete();
-        return 'Film has been deleted successfully';
+        return 'Author has been deleted successfully';
     }
 }

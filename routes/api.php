@@ -17,10 +17,10 @@ use App\Http\Controllers\Api\CountryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+// Form::model($commission, array('action' => array('CommissionController@update', $commission->id), 'method' => 'PUT'));
 route::apiResource('authors', AuthorController::class);
 route::apiResource('countries', CountryController::class);
 

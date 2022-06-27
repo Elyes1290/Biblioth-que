@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ValidateException;
 use App\Models\Author;
 use App\Models\Country;
+use App\Http\Services\CountryService;
+use App\Http\Resources\CountryCollection;
 
 class CountryController extends Controller
 {
+
+    public function __construct(private CountryService $_countryservice){}
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,9 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        $countries = Country::all();
+
+        return new CountryCollection($countries);
     }
 
     /**
@@ -31,7 +38,13 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+        
+            return $this->_countryservice->storeCountry(null);
+    
+        }catch(\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -42,7 +55,13 @@ class CountryController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+        
+            return $this->_countryservice->show($id);
+    
+        }catch(\Exception $e) {
+            throw $e;
+        }
     }
 
     /**

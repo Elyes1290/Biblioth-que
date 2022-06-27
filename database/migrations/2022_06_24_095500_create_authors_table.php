@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('city');
-            $table->date('birthdate');
+            $table->date('birthdate')->nullable();
             $table->timestamps();
 
 

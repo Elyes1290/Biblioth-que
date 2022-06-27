@@ -19,7 +19,7 @@ class AuthorFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'city' => $this->faker->city,
-            'birthdate' => $this->faker->dateTime(),
+            'birthdate' => rand(0, 3) != 0 ? $this->faker->dateTime() : null
         ];
     }
 }
