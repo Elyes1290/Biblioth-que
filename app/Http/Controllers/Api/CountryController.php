@@ -11,7 +11,7 @@ use App\Exceptions\ValidateException;
 use App\Models\Author;
 use App\Models\People;
 use App\Models\Country;
-use App\Http\Resource\CountryResource;
+use App\Http\Resources\CountryResource;
 use App\Http\Services\CountryService;
 use App\Http\Resources\CountryCollection;
 
@@ -38,12 +38,12 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $iso)
+    public function store(Request $request)
     {
         try {
         
-            $country =  $this->_countryservice->save($request, $iso);
-            return new CountryResource($country);
+            $country =  $this->_countryservice->save($request, null);
+            return 'We have successfully created a new country.';
     
         }catch(\Exception $e) {
             throw $e;
@@ -60,7 +60,7 @@ class CountryController extends Controller
     {
         try {
 
-            $country = Country::find($iso);
+            $country = Country::where('iso', $iso)->first();
             if (!$country){
                 throw new ApiException(
                     "Country not found.",
@@ -84,7 +84,15 @@ class CountryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $country = $this->_countryservice->save($request, $id);
+            return response([
+                'success' => true,
+                'message' => 'Country updated successfully.'
+            ], 200);
+        } catch (Exception $e) {
+            throw ($e);
+        }
     }
 
     /**
@@ -96,7 +104,7 @@ class CountryController extends Controller
     public function destroy($iso)
     {
         $isDeleted = $this->_countryservice->delete($iso);
-        if($isDeleted) {
+        if(!$isDeleted) {
             return response([
                 'success' => true,
                 'message' => "Your country has been deleted successfully"
