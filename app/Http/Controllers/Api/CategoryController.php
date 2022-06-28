@@ -4,20 +4,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Author;
-use App\Models\Country;
+use App\Models\Category;
 use App\Exceptions\ApiException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ValidateException;
-use App\Http\Services\AuthorService;
-use App\Http\Resources\AuthorCollection;
-use App\Http\Resources\AuthorResource;
+use App\Http\Services\CategoryService;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
 
-
-class AuthorController extends Controller
+class CategoryController extends Controller
 {
-    public function __construct(private AuthorService $_authorservice){}
+    public function __construct(private CategoryService $_categoryservice){}
+
+
     /**
      * Display a listing of the resource.
      *
@@ -25,11 +25,9 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
+        $categories = Category::all();
 
-        return new AuthorCollection($authors);
-
-
+        return new CategoryCollection($categories);
     }
 
     /**
@@ -40,17 +38,16 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-    try {
-
-        $authors = $this->_authorservice->save($request, null);
+        try{
+            $categories = $this->_categoryservice->save($request, null);
         return response([
             'success' => true,
-            'message' => 'Author created successfully'
+            'message' => 'Category successfully created.'
         ], 200);
-
-    }catch(\Exception $e) {
-        throw $e;
-    }
+        }catch(\Exception $e){
+            throw $e;
+        }
+        
     }
 
     /**
@@ -61,21 +58,19 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        try {
-
-            $author = Author::find($id);
-        if (!$author){
+        try{
+            $category = Category::find($id);
+        if(!$category){
             throw new ApiException(
-                "Author not found.",
-                    404
-                );
-             }
-             return $author;
-
-
-        }catch(\Exception $e) {
-            throw $e;
+                "Category not found.",
+                404);
         }
+        return $category;
+    }catch(\Exception $e){
+        throw $e;
+
+        }
+        
     }
 
     /**
@@ -87,18 +82,16 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $author = $this->_authorservice->save($request,$id);
+        try{
+            $categroy = $this->_categoryservice->save($request,$id);
             return response([
                 'success' => true,
-                'message' => 'Author successfully updated.'
+                'message' => 'Category successfully updated.'
             ], 200);
-
-        }catch(\Exception $e) {
+        }catch(\Exception $e){
             throw $e;
-        }
-
     }
+}
 
     /**
      * Remove the specified resource from storage.
@@ -108,14 +101,18 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        $isDeleted = $this->_authorservice->delete($id);
+        try{
+            $isDeleted = $this->_categoryservice->delete($id);
         if(!$isDeleted) {
             return response([
                 'success' => true,
-                'message' => "Your author has been deleted successfully"
+                'message' => "Your country has been deleted successfully"
             ], 200);
         } else {
-        throw new ApiException("Cannot delete Author.");
+        throw new ApiException("Cannot delete Category.");
         }
+    }catch(Exception $e){
+            throw $e;
+        } 
     }
 }

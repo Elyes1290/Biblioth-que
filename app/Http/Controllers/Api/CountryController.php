@@ -43,7 +43,10 @@ class CountryController extends Controller
         try {
         
             $country =  $this->_countryservice->save($request, null);
-            return 'We have successfully created a new country.';
+            return response([
+                'success' => true,
+                'message' => 'Country created successfully.'
+            ], 200);
     
         }catch(\Exception $e) {
             throw $e;

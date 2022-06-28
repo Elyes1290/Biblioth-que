@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\CategoryController;
+
 
 
 /*
@@ -23,4 +25,6 @@ use App\Http\Controllers\Api\CountryController;
 // Form::model($commission, array('action' => array('CommissionController@update', $commission->id), 'method' => 'PUT'));
 route::apiResource('authors', AuthorController::class);
 route::apiResource('countries', CountryController::class);
+route::apiResource('categories', CategoryController::class);
+
 
