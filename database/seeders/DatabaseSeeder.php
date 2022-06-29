@@ -39,9 +39,9 @@ class DatabaseSeeder extends Seeder
     //                                     $countryFound = Country::where('iso', $country->iso)->first();
     // });
     
-        $categories = Category::factory()->count(10)->create();
+        $categories = Category::factory()->count(100)->create();
 
-        $authors = Author::factory()->count(10)->make() 
+        $authors = Author::factory()->count(100)->make() 
                     ->each(function ($author) use ($countries) {
 
                         $author->country_id = $countries->random()->iso;
@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             
         
         
-        $books = Book::factory()->count(10)->make()
+        $books = Book::factory()->count(100)->make()
 
                         ->each(function ($book) use ($categories) {
 
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
 
                         });
 
-        $people = People::factory()->count(10)->make()
+        $people = People::factory()->count(100)->make()
                         ->each(function ($person) use ($countries) {
 
                         $person->country_id = $countries->random()->iso;
