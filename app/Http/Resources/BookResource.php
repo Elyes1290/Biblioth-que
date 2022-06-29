@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Category;
 use App\Models\Author;
+use App\Models\Book;
 use App\Http\Resources\CategoryCollection;
 
 
@@ -18,7 +19,9 @@ class BookResource extends JsonResource
      */
     public function toArray($request)
     {
-       
+
+        $books = $this->isbn;
+ 
 
         return [
 
@@ -28,7 +31,9 @@ class BookResource extends JsonResource
             'etat' =>$this->etat,
             'statut' =>$this->statut,
             'categories' => Category::find($this->category_id, 'name'),
-            'authors' => Author::with('books')->get()
+            'authors' => Author::whereHas('books', function ($q) use ($books){
+                $q->where('book_isbn', $books);
+            })->get('name')
         ];
     }
 }

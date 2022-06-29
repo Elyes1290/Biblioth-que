@@ -70,7 +70,8 @@ class BookController extends Controller
                 );
             }
 
-            return $book;
+            return new BookResource($book);
+
         }catch(\Exception $e){
             throw $e;
         }
