@@ -23,8 +23,8 @@ return new class extends Migration
                 ->onUpdate('cascade');
 
 
-        $table->string('book_id', 13)->index();
-        $table->foreign('book_id')
+        $table->string('book_isbn', 13)->index();
+        $table->foreign('book_isbn')
                 ->references('isbn')
                 ->on('books')
                 ->onDelete('cascade')

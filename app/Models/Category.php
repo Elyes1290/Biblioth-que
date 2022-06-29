@@ -19,7 +19,7 @@ class Category extends Model
 
     public function Books()
     {
-        return belongsTo(Book::class);
+        return belongsTo(Book::class, 'book_isbn');
     }
 
     

@@ -21,8 +21,8 @@ class BookFactory extends Factory
             'title' => $this->faker->title,
             'year' => $this->faker->year,
             'summary' => $this->faker->sentence(),
-            'etat' => 'good',
-            'statut' => 'available'
+            'etat' => $this->faker->randomElement(['good','durty']),
+            'statut' => $this->faker->randomElement(['available','loan'])
         ];
     }
 }

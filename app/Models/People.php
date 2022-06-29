@@ -18,7 +18,8 @@ class People extends Model
         'zip',
         'city',
         'phone',
-        'email'
+        'email',
+        'country_id'
     ];
 
 

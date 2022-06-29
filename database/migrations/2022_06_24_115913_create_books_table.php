@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->year('year');
             $table->text('summary');
-            $table->enum('etat', ['good', 'dirty']);
+            $table->enum('etat', ['good', 'durty']);
             $table->enum('statut', ['available', 'loan']);
             $table->timestamps();
 

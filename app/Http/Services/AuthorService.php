@@ -22,7 +22,7 @@ class AuthorService {
                 'name' => 'required|string|max:250',
                 'city' => 'required|string|max:250',
                 'birthdate' => 'required|date_format:Y-m-d',
-                'country_id' => 'required|string|max:3'
+                'country_id' => 'required|string|max:3|exists:countries,iso',
                 ];
         
                 $validator = Validator::make($request->all(),$validatorRules);

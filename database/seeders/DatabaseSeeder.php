@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
 
                             $idAuthor = $authors->random()->id;
                             $idBook = $book->isbn;
-                            $book->Authors()->attach([$idAuthor],['book_id' => $idBook]);
+                            $book->Authors()->attach([$idAuthor],['book_isbn' => $idBook]);
 
                         });
 

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PeopleController;
+use App\Http\Controllers\Api\BookController;
 
 
 
@@ -26,5 +28,9 @@ use App\Http\Controllers\Api\CategoryController;
 route::apiResource('authors', AuthorController::class);
 route::apiResource('countries', CountryController::class);
 route::apiResource('categories', CategoryController::class);
+route::apiResource('people', PeopleController::class);
+route::apiResource('books', BookController::class);
+
+
 
 

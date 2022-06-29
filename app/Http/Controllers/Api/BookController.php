@@ -5,31 +5,30 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Author;
-use App\Models\Country;
+use App\Models\Book;
+use App\Models\Category;
 use App\Exceptions\ApiException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ValidateException;
-use App\Http\Services\AuthorService;
-use App\Http\Resources\AuthorCollection;
-use App\Http\Resources\AuthorResource;
+use App\Http\Services\BookService;
+use App\Http\Resources\BookCollection;
+use App\Http\Resources\BookResource;
 
-
-class AuthorController extends Controller
+class BookController extends Controller
 {
-    public function __construct(private AuthorService $_authorservice){}
-    /**
+
+    public function __construct(private BookService $_bookservice){}
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $authors = Author::all();
+        $books = Book::all();
 
-        return new AuthorCollection($authors);
-
-
+        return new BookCollection($books);
     }
 
     /**
@@ -40,18 +39,18 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-    try {
+        try{
 
-        $authors = $this->_authorservice->save($request, null);
-        return response([
-            'success' => true,
-            'message' => 'Author created successfully',
-            'data' => new AuthorResource($request)
-        ], 200);
+            $books = $this->_bookservice->save($request, null);
+            return response([
+                'success' => true,
+                'message' => 'Book saved successfully.'
+                
+            ],200);
 
-    }catch(\Exception $e) {
-        throw $e;
-    }
+        }catch(\Exception $e){
+            throw $e;
+        }
     }
 
     /**
@@ -60,21 +59,19 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($isbn)
     {
-        try {
-
-            $author = Author::find($id);
-        if (!$author){
-            throw new ApiException(
-                "Author not found.",
+        try{
+            $book = Book::find($isbn);
+            if(!$book){
+                throw new ApiException(
+                    'Book does not exist',
                     404
                 );
-             }
-             return ['data'=> $author];
+            }
 
-
-        }catch(\Exception $e) {
+            return $book;
+        }catch(\Exception $e){
             throw $e;
         }
     }
@@ -88,17 +85,17 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $author = $this->_authorservice->save($request,$id);
+        try{
+
+            $books = $this->_bookservice->save($request, $id);
             return response([
                 'success' => true,
-                'message' => 'Author successfully updated.'
-            ], 200);
+                'message' => 'Book saved successfully.'
+            ],200);
 
-        }catch(\Exception $e) {
+        }catch(\Exception $e){
             throw $e;
-        }
-
+        }//
     }
 
     /**
@@ -109,7 +106,7 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        $isDeleted = $this->_authorservice->delete($id);
+        $isDeleted = $this->_bookservice->delete($id);
         if(!$isDeleted) {
             return response([
                 'success' => true,

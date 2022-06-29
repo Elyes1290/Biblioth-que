@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Country;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\People>
@@ -24,7 +25,8 @@ class PeopleFactory extends Factory
             'zip' => $this->faker->postCode,
             'city' => $this->faker->city,
             'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->email
+            'email' => $this->faker->email,
+            'country_id' => Country::find('id')
 
 
         ];

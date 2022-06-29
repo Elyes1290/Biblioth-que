@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'isbn';
+    public $incrementing = false;
+    // protected $keyType = 'number';
 
     protected $fillable = [
         'isbn',
@@ -35,7 +37,7 @@ class Book extends Model
 
     public function Categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class, 'category_id');
     }
 
 
