@@ -29,6 +29,7 @@ use App\Http\Controllers\API\ProductController;
 // Form::model($commission, array('action' => array('CommissionController@update', $commission->id), 'method' => 'PUT'));
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
+
      
 Route::middleware('auth:api')->group( function () {
     Route::resource('products', ProductController::class);
