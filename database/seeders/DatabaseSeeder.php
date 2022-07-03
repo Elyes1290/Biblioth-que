@@ -21,24 +21,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $faker = app(Generator::class);
 
-        $countries = Country::factory()
-                        ->count(100)
-                        ->make()
-                        ->each(function ($country) use ($faker) {
-                            do {
-                                $country->iso = $faker->countryCode();
-                                $countryFound = Country::where('iso', $country->iso)->first();
-                            } while($countryFound);
-                            $country->save();
-                        });
-    //                                     ->each(function($country) use ($faker) {
-                                            
-    //                                     $country->iso = $faker->countryCode();
-    //                                     $countryFound = Country::where('iso', $country->iso)->first();
-    // });
-    
+        $countries = Country::all();
+
         $categories = Category::factory()->count(100)->create();
 
         $authors = Author::factory()->count(100)->make() 

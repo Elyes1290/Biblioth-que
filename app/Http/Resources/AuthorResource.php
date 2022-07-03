@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CountryResource;
 
 use App\Models\Book;
+use App\Models\Country;
+
 
 class AuthorResource extends JsonResource
 {
@@ -26,7 +28,7 @@ class AuthorResource extends JsonResource
             'name' =>$this->name,
             'city' =>$this->city,
             'birthdate' =>$this->birthdate,
-            'country_id' =>$this->country_id,
+            'country' => Country::find($this->country_id, 'name'),
             'books' => Book::whereHas('authors', function($q) use ($authors) {
                 $q->where('author_id', $authors);
             })->get('title')
