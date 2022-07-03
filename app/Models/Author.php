@@ -28,6 +28,11 @@ class Author extends Model
     {
         return $this->belongsToMany(Book::class);
     }
+    
+    public function images()
+    {
+        return $this->morphMany(Image::class,'imageable');
+    }
 
 
 

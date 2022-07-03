@@ -10,6 +10,7 @@ use App\Models\People;
 use App\Models\Book;
 use \Faker\Generator;
 use App\Models\Category;
+use App\Models\Image;
 
 
 class DatabaseSeeder extends Seeder
@@ -70,6 +71,14 @@ class DatabaseSeeder extends Seeder
                     
                     
                         });
+
+
+        $author = Author::find(1);
+        $image = New Image;
+        $author->images()->save($image);
+
+        $image = Image::find(1);
+        $imageable = $image->imageable;
         
         
     }
