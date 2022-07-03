@@ -25,6 +25,40 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+         /**
+     * @OA\Get(
+     *      path="/api/countries",
+     *      operationId="index",
+     *      tags={"Countries"},
+
+     *      summary="Get List Of Countries",
+     *      description="Returns all countries and associated provinces. The country_slug variable is used for country specific data",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
     public function index()
     {
         $countries = Country::all();
@@ -38,6 +72,56 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+        /**
+     * @OA\Post(
+     ** path="/api/countries",
+     *   tags={"Add Countries"},
+     *   summary="Country",
+     *   operationId="store",
+     *
+     *   @OA\Parameter(
+     *      name="iso",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="name",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
+     
     public function store(Request $request)
     {
         try {
@@ -59,6 +143,50 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+             /**
+     * @OA\Get(
+     ** path="/api/countries/{iso}",
+     *   tags={"show Countries"},
+     *   summary="show countries",
+     *   operationId="show",
+     *
+     *   @OA\Parameter(
+     *      name="iso",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
+
+     
     public function show($iso)
     {
         try {
@@ -85,6 +213,64 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+             /**
+     * @OA\Put(
+     ** path="/api/countries/{iso}",
+     *   tags={"update Countries"},
+     *   summary="update countries",
+     *   operationId="update",
+     *
+     *   @OA\Parameter(
+     *      name="iso",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *  @OA\Parameter(
+     *      name="name",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *  @OA\Parameter(
+     *      name="description",
+     *      in="query",
+     *      required=false,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
     public function update(Request $request, $id)
     {
         try {
@@ -104,6 +290,48 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+                  /**
+     * @OA\Delete(
+     ** path="/api/countries/{iso}",
+     *   tags={"delete Countries"},
+     *   summary="delete countries",
+     *   operationId="delete",
+     *
+     *   @OA\Parameter(
+     *      name="iso",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
     public function destroy($iso)
     {
         $isDeleted = $this->_countryservice->delete($iso);

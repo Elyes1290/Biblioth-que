@@ -15,6 +15,8 @@ class RegisterController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -42,6 +44,8 @@ class RegisterController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+
+     
     public function login(Request $request)
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 

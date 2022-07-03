@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\PeopleController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\ProductController;
+use L5Swagger\Exceptions\L5SwaggerException;
+use L5Swagger\Generator;
 
 
 
@@ -35,14 +37,9 @@ Route::middleware('auth:api')->group( function () {
     Route::resource('products', ProductController::class);
 });
 
-// Route::group([
-//     'prefix' => 'v1', 
-//     'as' => 'api.', 
-//     'namespace' => 'Api\V1\Admin', 
-//     'middleware' => ['auth:api']
-//   ], function () {
-//       Route::apiResource('projects', 'ProjectsApiController');
-//   });
+Route::middleware('auth:api')->get('users', function (Request $request) {
+    return $request->user();
+});
 
 
 // Route::resource('products', ProductController::class);
