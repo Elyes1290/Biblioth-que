@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('URL')->nullable();
+            $table->string('name')->nullable();
+            $table->string('path')->nullable();
             $table->morphs('imageable'); // Adds unsigned INTEGER upvoteable_id and STRING upvoteable_type
             $table->timestamps();
         });

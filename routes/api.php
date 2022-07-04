@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PeopleController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\FileUpload;
 use L5Swagger\Exceptions\L5SwaggerException;
 use L5Swagger\Generator;
 
@@ -59,6 +60,8 @@ route::apiResource('countries', CountryController::class);
 route::apiResource('categories', CategoryController::class);
 route::apiResource('people', PeopleController::class);
 route::apiResource('books', BookController::class);
+
+
 
 
 
