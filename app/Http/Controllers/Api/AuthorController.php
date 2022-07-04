@@ -26,10 +26,10 @@ class AuthorController extends Controller
 
      /**
      * @OA\Get(
-     ** path="/api/authors/",
+     ** path="/api/authors",
      *   tags={"Authors"},
-     *   summary="update authors",
-     *   operationId="index",
+     *   summary="Get authors",
+     *   operationId="index authors",
      *
      *   
      *   @OA\Response(
@@ -73,11 +73,11 @@ class AuthorController extends Controller
      * @return \Illuminate\Http\Response
      */
      /**
-     * @OA\POST(
+     * @OA\Post(
      ** path="/api/authors",
      *   tags={"Authors"},
      *   summary="Add authors",
-     *   operationId="store",
+     *   operationId="store authors",
      *
      *   @OA\Parameter(
      *      name="id",
@@ -96,7 +96,15 @@ class AuthorController extends Controller
      *      )
      *   ),
      *  @OA\Parameter(
-     *      name="description",
+     *      name="city",
+     *      in="query",
+     *      required=false,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     * @OA\Parameter(
+     *      name="birthdate",
      *      in="query",
      *      required=false,
      *      @OA\Schema(
@@ -156,8 +164,8 @@ class AuthorController extends Controller
      * @OA\Get(
      ** path="/api/authors/{id}",
      *   tags={"Authors"},
-     *   summary="update authors",
-     *   operationId="show",
+     *   summary="show authors",
+     *   operationId="show authors",
      *
      *   @OA\Parameter(
      *      name="id",
@@ -167,7 +175,6 @@ class AuthorController extends Controller
      *           type="string"
      *      )
      *   ),
-
      *   
      *   @OA\Response(
      *      response=200,
@@ -226,7 +233,7 @@ class AuthorController extends Controller
      ** path="/api/authors/{id}",
      *   tags={"Authors"},
      *   summary="update authors",
-     *   operationId="update",
+     *   operationId="update authors",
      *
      *   @OA\Parameter(
      *      name="id",
@@ -307,6 +314,48 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+      /**
+     * @OA\Delete(
+     ** path="/api/authors/{id}",
+     *   tags={"Authors"},
+     *   summary="remove authors",
+     *   operationId="destroy authors",
+     *
+     *   @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
     public function destroy($id)
     {
         $isDeleted = $this->_authorservice->delete($id);
