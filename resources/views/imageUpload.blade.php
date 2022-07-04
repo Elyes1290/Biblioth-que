@@ -14,7 +14,7 @@
   @endif
   <div class="card">
     <div class="card-header text-center font-weight-bold">
-      <h2>Laravel 9 Image Upload Tutorial</h2>
+      <h2>You want upload your image ? Its here bro</h2>
     </div>
     <div class="card-body">
       <form name="image-upload" id="image-upload" method="post" action="{{url('image-upload')}}" enctype="multipart/form-data">

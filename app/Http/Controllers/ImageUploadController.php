@@ -39,7 +39,7 @@ class ImageUploadController extends Controller
  
         $save->save();
  
-      return redirect('image-upload')->with('status', 'Youpiiii Image Has been uploaded successfully.')->with('image',$name);
+      return redirect('image-upload')->with('status', 'Youpiiii your image Has been uploaded successfully.')->with('image',$name);
  
     }
 }
