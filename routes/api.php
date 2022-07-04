@@ -32,7 +32,7 @@ use L5Swagger\Generator;
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 
-     
+
 Route::middleware('auth:api')->group( function () {
     Route::resource('products', ProductController::class);
 });
@@ -44,7 +44,30 @@ Route::middleware('auth:api')->get('users', function (Request $request) {
 
 // Route::resource('products', ProductController::class);
 
-route::apiResource('authors', AuthorController::class);
+Route::middleware('auth:api')->group( function () {
+    Route::group(['middleware' => ['permission:read authors']], function () {
+        route::get('authors', [AuthorController::class, "index"]);
+    });
+});
+
+/*
+Route::middleware('auth:api')->group( function () {
+
+    Route::middleware(['auth:api', 'middleware' => ['role:administrator|reader']])->group( function () {
+        route::get('authors', [AuthorController::class, "index"]);
+        route::get('authors/{id}', [AuthorController::class, "show"]);
+    });
+
+    Route::middleware(['middleware' => ['role:administrator']])->group( function () {
+        route::post('authors', [AuthorController::class, "store"]);
+        route::put('authors/{id}', [AuthorController::class, "update"]);
+        route::delete('authors/{id}', [AuthorController::class, "destroy"]);
+    });
+});
+*/
+
+
+
 route::apiResource('countries', CountryController::class);
 route::apiResource('categories', CategoryController::class);
 route::apiResource('people', PeopleController::class);

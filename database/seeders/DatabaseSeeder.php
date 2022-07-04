@@ -23,31 +23,35 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+        $this->call(PermissionSeeder::class);
+
+        $this->call(CountryTableSeeder::class);
+
         $countries = Country::all();
 
         $categories = Category::factory()->count(100)->create();
 
-        $authors = Author::factory()->count(100)->make() 
+        $authors = Author::factory()->count(100)->make()
                     ->each(function ($author) use ($countries) {
 
                         $author->country_id = $countries->random()->iso;
                         $author->save();
 
                     });
-                    
-            
-        
-        
+
+
+
+
         $books = Book::factory()->count(100)->make()
 
                         ->each(function ($book) use ($categories) {
 
                             $book->category_id = $categories->random()->id;
-                            $book->save();    
-                        
+                            $book->save();
+
                         })
-                        
-                        
+
+
                         ->each(function ($book) use ($authors) {
 
                             $idAuthor = $authors->random()->id;
@@ -68,8 +72,8 @@ class DatabaseSeeder extends Seeder
 
                             $idBooks = $books->random()->isbn;
                             $person->Books()->attach([$idBooks]);
-                    
-                    
+
+
                         });
 
 
@@ -79,7 +83,7 @@ class DatabaseSeeder extends Seeder
 
         $image = Image::find(1);
         $imageable = $image->imageable;
-        
-        
+
+
     }
 }
