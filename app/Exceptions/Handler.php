@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\UnauthorizedExcepton;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,6 +46,14 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (Throwable $e) {
+
+            if ($e instanceof UnauthorizedExcepton){
+                return response(
+                    [
+                    'success' => false,
+                    'message' => 'You are not allowed to access this application',
+                    ], $e->getCode() ?: 400);
+            }
             if ($e instanceof ApiException) {
                 //Log::info('test');
                 return response(

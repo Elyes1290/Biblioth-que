@@ -34,7 +34,18 @@ Route::post('login', [RegisterController::class, 'login']);
 
      
 Route::middleware('auth:api')->group( function () {
+    // route::get('authors', AuthorController::class, "index");
+    // route::get('authors/{id}', AuthorController::class, "show");
+    // route::post('authors/{id}', AuthorController::class, "store");
+    // route::put('authors', AuthorController::class, "update");
+    // route::delete('authors/{id}', AuthorController::class, "destroy");
+
+
     Route::resource('products', ProductController::class);
+});
+
+Route::group(['middleware' => ['can:read authors']], function () {
+
 });
 
 Route::middleware('auth:api')->get('users', function (Request $request) {
@@ -44,7 +55,6 @@ Route::middleware('auth:api')->get('users', function (Request $request) {
 
 // Route::resource('products', ProductController::class);
 
-route::apiResource('authors', AuthorController::class);
 route::apiResource('countries', CountryController::class);
 route::apiResource('categories', CategoryController::class);
 route::apiResource('people', PeopleController::class);

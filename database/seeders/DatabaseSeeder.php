@@ -13,6 +13,7 @@ use App\Models\Category;
 use App\Models\Image;
 
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -23,7 +24,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+        $this->call(PermissionSeeder::class);
+        $this->call(CountryTableSeeder::class);
+
         $countries = Country::all();
+
+
 
         $categories = Category::factory()->count(100)->create();
 
