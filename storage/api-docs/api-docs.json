@@ -36,9 +36,9 @@
             },
             "post": {
                 "tags": [
-                    "Add Countries"
+                    "Countries"
                 ],
-                "summary": "Country",
+                "summary": "Add Country",
                 "operationId": "store",
                 "parameters": [
                     {
@@ -83,9 +83,9 @@
         "/api/countries/{iso}": {
             "get": {
                 "tags": [
-                    "show Countries"
+                    "Countries"
                 ],
-                "summary": "show countries",
+                "summary": "show country",
                 "operationId": "show",
                 "parameters": [
                     {
@@ -120,7 +120,7 @@
             },
             "put": {
                 "tags": [
-                    "update Countries"
+                    "Countries"
                 ],
                 "summary": "update countries",
                 "operationId": "update",
@@ -173,7 +173,7 @@
             },
             "delete": {
                 "tags": [
-                    "delete Countries"
+                    "Countries"
                 ],
                 "summary": "delete countries",
                 "operationId": "delete",

@@ -12,6 +12,8 @@ use Illuminate\Routing\Controller as BaseController;
  *    title="SWAGGER style",
  *    version="1.0.0",
  * )
+ * 
+ *
  */
 
 class Controller extends BaseController

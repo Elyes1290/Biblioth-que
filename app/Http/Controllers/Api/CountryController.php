@@ -76,8 +76,8 @@ class CountryController extends Controller
         /**
      * @OA\Post(
      ** path="/api/countries",
-     *   tags={"Add Countries"},
-     *   summary="Country",
+     *   tags={"Countries"},
+     *   summary="Add Country",
      *   operationId="store",
      *
      *   @OA\Parameter(
@@ -147,8 +147,8 @@ class CountryController extends Controller
              /**
      * @OA\Get(
      ** path="/api/countries/{iso}",
-     *   tags={"show Countries"},
-     *   summary="show countries",
+     *   tags={"Countries"},
+     *   summary="show country",
      *   operationId="show",
      *
      *   @OA\Parameter(
@@ -214,10 +214,10 @@ class CountryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-             /**
+    /**
      * @OA\Put(
      ** path="/api/countries/{iso}",
-     *   tags={"update Countries"},
+     *   tags={"Countries"},
      *   summary="update countries",
      *   operationId="update",
      *
@@ -294,7 +294,7 @@ class CountryController extends Controller
                   /**
      * @OA\Delete(
      ** path="/api/countries/{iso}",
-     *   tags={"delete Countries"},
+     *   tags={"Countries"},
      *   summary="delete countries",
      *   operationId="delete",
      *
