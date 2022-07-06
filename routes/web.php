@@ -22,8 +22,8 @@ Route::get('/', function () {
 
 //File
 
-Route::get('upload-file', [FileUpload::class, 'createForm'])->name('file');
-Route::post('upload-file', [FileUpload::class, 'fileUpload'])->name('file.store');
+Route::get('file-upload', [FileUpload::class, 'createForm'])->name('file');
+Route::post('file-upload', [FileUpload::class, 'fileUpload'])->name('file.store');
 
 // Image
 
